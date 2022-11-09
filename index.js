@@ -8,7 +8,7 @@ const server = app.listen(8080,()=>console.log("listening on express"))
 //ENDPOINTS
 
 app.get('/', (req, res)=>{
-    res.send('Frionel Pechi')
+    res.send('Productos')
 })
 
 app.get('/productos', async (req , res) => {
@@ -100,17 +100,12 @@ class Contenedor {
         }
     }
 
-    getById = async(id) => {
-        if (!id){
-            return{
-                status: "error" ,
-                message: "ID is required",
-            }
-        }
+    getRandom = async() => {
         if(fs.existsSync(pathToFile)){
             let data =  await fs.promises.readFile(pathToFile, "utf-8");
             let productos = JSON.parse(data);
-            let producto = productos.find((producto) => producto.id == id)
+            let indiceRandom = Math.floor(Math.random()*productos.length)
+            let producto = productos.find((producto) => producto.id == indiceRandom)
             if (producto){
                 return{
                     status: "success" ,
